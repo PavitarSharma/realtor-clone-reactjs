@@ -11,7 +11,7 @@ import Header from "./components/Header";
 const App = () => {
   return (
     <Router>
-      <Header />
+      {/* <Header /> */}
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
