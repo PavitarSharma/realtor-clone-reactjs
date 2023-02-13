@@ -26,27 +26,27 @@ const Header = () => {
         <div>
           <ul className="flex items-center space-x-10">
             <li
-              className={`py-4 border-b-[3px]  border-b-transparent  text-gray-500 cursor-pointer ${
+              className={`py-4   text-gray-500 cursor-pointer ${
                 pathMatchRoute("/") &&
-                "text-gray-900 border-b-red-400 font-semibold"
+                " border-b-red-400 border-b-[3px] font-semibold text-gray-900"
               }`}
               onClick={() => navigate("/")}
             >
               Home
             </li>
             <li
-              className={`py-4 border-b-[3px]  border-b-transparent  text-gray-500 cursor-pointer ${
+              className={`py-4  text-gray-500 cursor-pointer ${
                 pathMatchRoute("/offers") &&
-                "border-b-red-400 text-gray-900 font-semibold"
+                "border-b-red-400 border-b-[3px] text-gray-900 font-semibold"
               }`}
               onClick={() => navigate("/offers")}
             >
               Offer
             </li>
             <li
-              className={`py-4 border-b-[3px]  border-b-transparent  text-gray-500 cursor-pointer ${
+              className={`py-4 text-gray-500 cursor-pointer ${
                 pathMatchRoute("/sign-in") &&
-                "border-b-red-400 text-gray-900 font-semibold"
+                "border-b-red-400 border-b-[3px] text-gray-900 font-semibold"
               }`}
               onClick={() => navigate("/sign-in")}
             >

@@ -20,13 +20,21 @@ const SignIn = () => {
 
   const onHandleSubmit = (event) => {
     event.preventDefault();
+    const { email, password } = formData;
+
+    if (!email || !password) {
+      alert("All filed are required")
+      return 
+    }
+
     console.log(formData);
 
     setFormData({
       email: "",
-      password: ""
-    })
+      password: "",
+    });
   };
+
   return (
     <section>
       <h1 className="text-center text-3xl font-bold mt-10">Sign In</h1>
@@ -95,13 +103,14 @@ const SignIn = () => {
             <button
               className="w-full bg-blue-600 text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md hover:bg-blue-700 transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-800"
               type="submit"
+              
             >
               Sign in
             </button>
             <div className="flex items-center  my-4 before:border-t before:flex-1 before:border-gray-300 after:border-t after:flex-1 after:border-gray-300">
               <p className="text-center font-semibold mx-4">OR</p>
             </div>
-            <GoogleAuth />
+            <GoogleAuth buttonText="Sign In with Google" />
           </form>
         </div>
       </div>
