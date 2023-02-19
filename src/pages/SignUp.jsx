@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleAuth from "../components/GoogleAuth";
+import { toast } from "react-toastify";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db } from "../firebase";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -19,16 +24,36 @@ const SignUp = () => {
     }));
   };
 
-  const onHandleSubmit = (event) => {
+  const onHandleSubmit = async (event) => {
     event.preventDefault();
-    const { email, password } = formData;
+    const { name, email, password } = formData;
 
     if (!name || !email || !password) {
-      alert("All filed are required");
+      toast.error("All filed are required");
       return;
     }
+    
 
-    console.log(formData);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+      const formDataCopy = { uid: user.uid, ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timestamp = serverTimestamp();
+
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+      toast.success("Sign up was successful");
+      navigate("/");
+    } catch (error) {
+      toast.error("Something went wrong with the registration");
+    }
 
     setFormData({
       name: "",

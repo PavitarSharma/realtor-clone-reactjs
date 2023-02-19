@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleAuth from "../components/GoogleAuth";
+import {  toast } from 'react-toastify';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const SignIn = () => {
     const { email, password } = formData;
 
     if (!email || !password) {
-      alert("All filed are required")
+      toast.error("All filed are required")
       return 
     }
 
