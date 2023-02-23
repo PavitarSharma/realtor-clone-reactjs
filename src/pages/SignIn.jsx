@@ -3,6 +3,8 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleAuth from "../components/GoogleAuth";
 import {  toast } from 'react-toastify';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -19,21 +21,26 @@ const SignIn = () => {
     }));
   };
 
-  const onHandleSubmit = (event) => {
+  const onHandleSubmit = async (event) => {
     event.preventDefault();
     const { email, password } = formData;
 
     if (!email || !password) {
       toast.error("All filed are required")
-      return 
+      
     }
 
-    console.log(formData);
+    try {
+      const user = await signInWithEmailAndPassword(auth, email, password)
+      toast.success("User logged in successsfully");
+      navigate("/")
+      return user
+      
+    } catch (error) {
+      toast.error("Something went wrong with the login");
+    }
 
-    setFormData({
-      email: "",
-      password: "",
-    });
+    
   };
 
   return (

@@ -1,6 +1,8 @@
+import { sendPasswordResetEmail } from "firebase/auth";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import GoogleAuth from "../components/GoogleAuth";
+import { toast } from "react-toastify";
+import { auth } from "../firebase";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -10,7 +12,7 @@ const ForgotPassword = () => {
     setEmail(event.target.value);
   };
 
-  const onHandleSubmit = (event) => {
+  const onHandleSubmit = async (event) => {
     event.preventDefault();
 
     if (!email) {
@@ -18,7 +20,14 @@ const ForgotPassword = () => {
       return;
     }
 
-    setEmail("");
+    try {
+      await sendPasswordResetEmail(auth, email)
+      toast.success("Email was sent");
+    } catch (error) {
+      toast.error("Could not send reset password");
+    }
+
+ 
   };
 
   return (
